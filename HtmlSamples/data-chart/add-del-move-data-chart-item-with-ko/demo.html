@@ -1,0 +1,133 @@
+<script src="http://igniteuisamples.dev.infragistics.local/13-2/js/modernizr.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="http://code.jquery.com/ui/1.10.0/jquery-ui.min.js"></script>
+<script src="http://cdn-na.infragistics.com/jquery/20132/beta/js/infragistics.core.js"></script>
+<script src="http://cdn-na.infragistics.com/jquery/20132/beta/js/infragistics.lob.js"></script>
+<script src="http://cdn-na.infragistics.com/jquery/20132/beta/js/infragistics.dv.js"></script>
+<script src="http://igniteuisamples.dev.infragistics.local/13-2/js/external/knockout-latest.js"></script>
+<script src="http://igniteuisamples.dev.infragistics.local/13-2/js/external/knockout.mapping-latest.js"></script>
+<script src="http://cdn-na.infragistics.com/jquery/20132/beta/js/extensions/infragistics.ui.datachart.knockout-extensions.js"></script>
+<script src="http://cdn-na.infragistics.com/jquery/20132/beta/js/extensions/infragistics.ui.combo.knockout-extensions.js"></script>
+<link href="http://cdn-na.infragistics.com/jquery/20132/beta/css/themes/infragistics/infragistics.theme.css" rel="stylesheet"></link>
+<link href="http://cdn-na.infragistics.com/jquery/20132/beta/css/structure/infragistics.css" rel="stylesheet"></link>
+
+<div>
+        <div id="lineChart" data-bind='igDataChart: {
+            dataSource: data,
+            width: chartWidth,
+            height: chartHeight,
+            axes: [{
+                name: "xAxis",
+                type: "categoryX",
+                label: "label",
+
+            }, {
+                name: "yAxis",
+                type: "numericY",
+                minimumValue: minChartValue,
+                maximumValue: maxChartValue,
+
+            }],
+            series: [{
+                name: "line1",
+                type: "line",
+                thickness: chartThickness,
+                markerType: "automatic",
+                xAxis: "xAxis",
+                yAxis: "yAxis",
+                valueMemberPath: "value1",
+                transitionDuration: transitionDuration
+            },
+            {
+                name: "line2",
+                type: "line",
+                thickness: chartThickness,
+                markerType: "automatic",
+                xAxis: "xAxis",
+                yAxis: "yAxis",
+                valueMemberPath: "value2",
+                transitionDuration: transitionDuration
+            },
+            {
+                name: "line3",
+                type: "line",
+                thickness: chartThickness,
+                markerType: "automatic",
+                xAxis: "xAxis",
+                yAxis: "yAxis",
+                valueMemberPath: "value3",
+                transitionDuration: transitionDuration
+            }]
+        }'>
+	    </div>
+        <div class="combo-container">
+            <label for="combo1">$$(Chart_KO_Select_Current)</label>
+            <div class="clear"></div>
+            <div id="combo1" data-bind="igCombo: {
+                dataSource: data,
+                selectedItems : [{ index: 3 }],
+                valueKey: 'index',
+                textKey: 'label',
+                width: '150',
+                mode: 'dropdown',
+                enableClearButton: false
+            }"></div>
+        </div>
+        <div class="clear"></div>
+        <div class="btn-container">
+            <button class="btn-add-start" title="$$(Chart_KO_Add_Start)"></button>
+            <button class="btn-rmv-start" title="$$(Chart_KO_Remove_Start)"></button>
+            <button class="btn-add-curr" title="$$(Chart_KO_Add_Before_Current)"></button>
+            <button class="btn-rmv-curr" title="$$(Chart_KO_Delete_Current)"></button>
+            <button class="btn-add-end" title="$$(Chart_KO_Add_End)"></button>
+            <button class="btn-rmv-end" title="$$(Chart_KO_Remove_End)"></button>
+            <div class="clear margin-b"></div>
+            <button class="btn-prev" title="$$(Chart_KO_Move_Current_Backward)"></button>
+            <button class="btn-play" title="$$(Chart_KO_Move_Current_Each_Second)"></button>
+            <button class="btn-next" title="$$(Chart_KO_Move_Current_Forward)"></button>
+            <button class="btn-pause" title="$$(Chart_KO_Pause_Current)"></button>
+        </div>
+        <div class="clear"></div>
+        <div id="barColumnChart" data-bind='igDataChart: {
+            dataSource: data,
+            width: chartWidth,
+            height: chartHeight,
+            axes: [{
+                name: "xAxis",
+                type: "categoryX",
+                label: "label"
+            }, {
+                name: "yAxis",
+                type: "numericY",
+                minimumValue: minChartValue,
+                maximumValue: maxChartValue
+
+            }],
+            series: [{
+                name: "column1",
+                type: "column",
+                thickness: chartThickness,
+                xAxis: "xAxis",
+                yAxis: "yAxis",
+                valueMemberPath: "value1",
+                transitionDuration: transitionDuration
+            },
+            {
+                name: "column2",
+                type: "column",
+                thickness: chartThickness,
+                xAxis: "xAxis",
+                yAxis: "yAxis",
+                valueMemberPath: "value2",
+                transitionDuration: transitionDuration
+            }, {
+                name: "column3",
+                type: "column",
+                thickness: chartThickness,
+                xAxis: "xAxis",
+                yAxis: "yAxis",
+                valueMemberPath: "value3",
+                transitionDuration: transitionDuration
+            }]
+        }'></div>
+    </div>

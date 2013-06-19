@@ -1,0 +1,318 @@
+<script src="http://igniteuisamples.dev.infragistics.local/13-2/js/modernizr.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="http://code.jquery.com/ui/1.10.0/jquery-ui.min.js"></script>
+<script src="../../js/jquery.animate-colors-min.js"></script>
+<script src="http://cdn-na.infragistics.com/jquery/20132/beta/js/infragistics.core.js"></script>
+<script src="http://cdn-na.infragistics.com/jquery/20132/beta/js/infragistics.lob.js"></script>
+<script src="http://cdn-na.infragistics.com/jquery/20132/beta/js/infragistics.dv.js"></script>
+<script src="http://igniteuisamples.dev.infragistics.local/13-2/js/external/knockout-latest.js"></script>
+<script src="http://igniteuisamples.dev.infragistics.local/13-2/js/external/knockout.mapping-latest.js"></script>
+<script src="http://cdn-na.infragistics.com/jquery/20132/beta/js/extensions/infragistics.ui.editors.knockout-extensions.js"></script>
+<script src="http://cdn-na.infragistics.com/jquery/20132/beta/js/extensions/infragistics.ui.datachart.knockout-extensions.js"></script>
+<link href="http://cdn-na.infragistics.com/jquery/20132/beta/css/themes/infragistics/infragistics.theme.css" rel="stylesheet"></link>
+<link href="http://cdn-na.infragistics.com/jquery/20132/beta/css/structure/infragistics.css" rel="stylesheet"></link>
+
+<div class="main-container">
+        <div class="editor-container">
+            <label class="labels">$$(Chart_KO_Month):</label>
+            <div id="ed-month" data-bind="igTextEditor: { value: currentMonth, width: 100, updateMode: 'immediate' }"></div>
+        </div>
+        <div class="editor-container">
+            <label class="labels">$$(Chart_KO_Revenue):</label>
+            <div id="ed-revenue" data-bind="igNumericEditor: {
+                value: currentRevenue,
+                width: 100,
+                minValue: 0,
+                maxValue: 50,
+                button: 'spin',
+                spinDelta: 5,
+                updateMode: 'immediate'
+                }"></div>
+        </div>
+        <div class="editor-container">
+            <label class="labels">$$(Chart_KO_Expenses):</label>
+            <div id="ed-expenses" data-bind="igNumericEditor: {
+                value: currentExpenses,
+                width: 100,
+                minValue: 0,
+                maxValue: 50,
+                button: 'spin',
+                spinDelta: 5,
+                updateMode: 'immediate'
+            }"></div>
+        </div>
+        <div class="editor-container">
+            <label class="labels">$$(Chart_KO_Profit):</label>
+            <div id="ed-profit" data-bind="igNumericEditor: {
+                value: currentProfit,
+                width: 100,
+                minValue: -50,
+                button: 'spin',
+                spinDelta: 5,
+                maxValue: 50,
+                updateMode: 'immediate'
+            }"></div>
+        </div>
+        <button class="btn-refresh" title="$$(Chart_KO_Refresh)"></button>
+        <div class="clear"></div>
+        <div class="eidtors-title">
+            $$(Chart_KO_Change_Editor_Values)
+            <span class="year-profit" data-bind="text: yearProfit"></span>
+            <span class="year-profit">$</span>
+            <span class="year-profit"> $$(Chart_KO_Overall_Profit): </span>
+        </div>
+        <div class="clear hr"></div>
+        <div class="slider-title">
+            $$(Chart_KO_Move_Sliders)
+            <div class="number-container"></div>
+        </div>
+        <div class="clear"></div>
+        <div class="window-container-1">
+            <div class="slider-container">
+                <div id="slider1"></div>
+            </div>
+            <div class="clear"></div>
+            <div id="lineChart" class="float" data-bind='igDataChart: {
+                dataSource: data,
+                width: chartWidth,
+                height: chartHeight,
+                axes: [{
+                    name: "xAxis",
+                    type: "categoryX",
+                    interval: chartIntervalX,
+                    label: "month",
+                    labelLocation: "outsideTop"
+
+                }, {
+                    name: "yAxis",
+                    type: "numericY",
+                    interval: chartIntervalY,
+                    minimumValue: -50,
+                    maximumValue: maxChartValue
+
+                }],
+                series: [{
+                    name: "line1",
+                    type: "line",
+                    thickness: chartThickness,
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    valueMemberPath: "revenue",
+                    transitionDuration: transitionDuration,
+                    brush: revenueColor
+                },
+                {
+                    name: "line2",
+                    type: "line",
+                    thickness: chartThickness,
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    valueMemberPath: "expenses",
+                    transitionDuration: transitionDuration,
+                    brush: expensesColor
+                }, {
+                    name: "line3",
+                    type: "line",
+                    thickness: chartThickness,
+                    // markerType: "automatic",
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    valueMemberPath: "profit",
+                    transitionDuration: transitionDuration,
+                    brush: profitColor
+                }]
+            }'>
+	        </div>
+            <div id="rangeChart" class="float" data-bind='igDataChart: {
+                dataSource: data,
+                width: chartWidth,
+                height: chartHeight,
+                axes: [{
+                    name: "xAxis",
+                    type: "categoryX",
+                    interval: chartIntervalX,
+                    label: "month",
+                    labelLocation: "outsideTop"
+                },
+                {
+                    name: "yAxis",
+                    type: "numericY",
+                }],
+                series: [{
+                    name: "rangeArea",
+                    type: "rangeArea",
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    lowMemberPath: "revenue",
+                    highMemberPath: "profit",
+                    showTooltip: true,
+                    transitionDuration: transitionDuration
+                }]
+            }'></div>
+            <div id="bubbleChart" class="float" data-bind='igDataChart: {
+                dataSource: data,
+                width: chartWidth,
+                height: chartHeight,
+                axes: [{
+                    name: "xAxis",
+                    type: "numericX",
+                    interval: chartIntervalX,
+                    formatLabel: formatMonth,
+                    labelLocation: "outsideTop"
+                }, {
+                    name: "yAxis",
+                    type: "numericY",
+                    minimumValue: minChartValue,
+                    maximumValue: maxChartValue
+                }],
+                series: [{
+                    name: "bubble",
+                    type: "bubble",
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    xMemberPath: "index",
+                    yMemberPath: "profit",
+                    radiusMemberPath: "revenue",
+                    fillMemberPath: "revenue",
+                    labelMemberPath: "month",
+                    markerType: "circle",
+                    transitionDuration: transitionDuration,
+                    fillScale: {
+                        type: "value",
+                        brushes: ["red", "blue"],
+                        minimumValue: 0,
+                        maximumValue: 20
+                    }
+                }]
+            }'></div>
+        </div>
+        <div class="window-container-2">
+            <div class="slider-container slider-contaier-2">
+                <div id="slider2"></div>
+            </div>
+            <div id="barColumnChart" class="float" data-bind='igDataChart: {
+                dataSource: data,
+                width: chartWidth,
+                height: chartHeight,
+                axes: [{
+                    name: "xAxis",
+                    type: "categoryX",
+                    interval: chartIntervalX,
+                    label: "month",
+                    labelLocation: "outsideTop"
+                }, {
+                    name: "yAxis",
+                    type: "numericY",
+                    minimumValue: minChartValue,
+                    maximumValue: maxChartValue
+
+                }],
+                series: [{
+                    name: "column1",
+                    type: "column",
+                    thickness: chartThickness,
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    valueMemberPath: "revenue",
+                    transitionDuration: transitionDuration,
+                    brush: revenueColor
+                },
+                {
+                    name: "column2",
+                    type: "column",
+                    thickness: chartThickness,
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    valueMemberPath: "expenses",
+                    transitionDuration: transitionDuration,
+                    brush: expensesColor
+                }, {
+                    name: "column3",
+                    type: "column",
+                    thickness: chartThickness,
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    valueMemberPath: "profit",
+                    transitionDuration: transitionDuration,
+                    brush: profitColor
+                }]
+            }'></div>
+           <div id="waterfallChart" class="float" data-bind='igDataChart: {
+                dataSource: data,
+                width: chartWidth,
+                height: chartHeight,
+                axes: [{
+                    name: "xAxis",
+                    type: "categoryX",
+                    interval: chartIntervalX,
+                    label: "month",
+                    labelLocation: "outsideTop"
+                }, {
+                    name: "yAxis",
+                    type: "numericY",
+                    minimumValue: minChartValue,
+                    maximumValue: maxChartValue
+
+                }],
+                series: [{
+                    name: "waterfall1",
+                    type: "waterfall",
+                    thickness: chartThickness,
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    valueMemberPath: "revenue",
+                    transitionDuration: transitionDuration
+
+                },
+                {
+                    name: "waterfall2",
+                    type: "waterfall",
+                    thickness: chartThickness,
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    valueMemberPath: "expenses",
+                    transitionDuration: transitionDuration
+                }, {
+                    name: "waterfall3",
+                    type: "waterfall",
+                    thickness: chartThickness,
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    valueMemberPath: "profit",
+                    transitionDuration: transitionDuration
+                }]
+            }'>
+	        </div>
+
+            <div id="polarSplineChart" class="float" data-bind='igDataChart: {
+                width: chartWidth,
+                height: chartHeight,
+                dataSource: data,
+                axes: [{
+                    name: "angleAxis",
+                    type: "numericAngle",
+                    interval: chartIntervalX,
+                    formatLabel: formatMonth,
+                },
+                {
+                    name: "radiusAxis",
+                    type: "numericRadius"
+                }],
+                series: [{
+                    name: "polarSpline",
+                    type: "polarSpline",
+                    angleAxis: "angleAxis",
+                    radiusAxis: "radiusAxis",
+                    angleMemberPath: "index",
+                    radiusMemberPath: "revenue",
+                    transitionDuration: transitionDuration,
+                    markerBrush: ""
+                }]
+            }'>
+	        </div>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+        <button class="windows-button"></button>
+    </div>
+    <div class="clear"></div>
