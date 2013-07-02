@@ -4,22 +4,17 @@ $(function () {
                 interval,
                 globalItem = 3,
                 globalIndex = 3, // When item is deleted we need to record gloablly the index
-                autoIncrement = 0;
+                autoIncrement = 1;
             function generateData(count) {
-                var num = count, data = [], curr = 10;
+                var num = count, data = [], curr = 10, revenue, expenses;
                 for (var i = 0; i < num; i++) {
-                    if (Math.random() > .5) {
-                        curr += Math.random() * 2.0;
-                    } else {
-                        curr -= Math.random() * 2.0;
-                    }
-                    var rad = Math.random() * 100.0;
+                    revenue = Math.random() * 90.0;
+                    expenses = Math.random() * 70.0;
                     data[i] = {
-                        label: (count === 1) ? autoIncrement.toString() : i.toString(),
-                        index: (count === 1) ? autoIncrement : i,
-                        value1: Math.round(curr * 1000.0) / 1000.0,
-                        value2: rad,
-                        value3: (rad / 100.0) * 20
+                        label: (count === 1) ? autoIncrement.toString() : (i + 1).toString(),
+                        index: (count === 1) ? autoIncrement : (i + 1),
+                        revenue: revenue,
+                        expenses: expenses
                     };
                     autoIncrement++;
                 }
@@ -30,7 +25,6 @@ $(function () {
                 }
             }
             function ViewModel(data) {
-                var self = this;
                 this.data = data;
                 this.minChartValue = 0;
                 this.maxChartValue = 100;

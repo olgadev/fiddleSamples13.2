@@ -8,22 +8,6 @@ $(function () {
             
             // process events of buttons
 
-            $("#selectValue").mouseover(function () {
-                $("#selectValue").html('');
-                var minimumValue = $("#radialgauge").igRadialGauge("option", "minimumValue");
-                var maximumValue = $("#radialgauge").igRadialGauge("option", "maximumValue");
-                var options = "<option></option>";
-                
-                var startValue = minimumValue <= maximumValue ? minimumValue : maximumValue;
-                var endValue = minimumValue > maximumValue ? minimumValue : maximumValue;
-
-                for (var i = startValue; i <= endValue; i++)
-                    options += "<option>" + i + "</option>";
-
-                if (Math.abs(maximumValue - minimumValue) > 0)
-                    $(options).appendTo($("#selectValue"));
-            });
-
             $("#selectValue").change(function (e) {
                 $("#needleValue").val($(this).val());
             });
@@ -32,19 +16,27 @@ $(function () {
                 click: function (e) {
                     var needleValue = $("#needleValue").val();
 
-                    var minimumValue = $("#radialgauge").igRadialGauge("option", "minimumValue");
-                    var maximumValue = $("#radialgauge").igRadialGauge("option", "maximumValue");
+                    var minimumValue = 0;
+                    var maximumValue = 100;
 
-                    if((needleValue >= minimumValue && needleValue <= maximumValue)
-                        || (needleValue <= minimumValue && needleValue >= maximumValue))
-                        $("#radialgauge").igRadialGauge("option", "value", needleValue);
+                    if (needleValue >= minimumValue && needleValue <= maximumValue) {
+                        $("#radialGauge").igRadialGauge("option", "value", needleValue);
+                    }
+                    else if (needleValue < minimumValue) {
+                        $("#radialGauge").igRadialGauge("option", "value", 0);
+                        $("#needleValue").val(0);
+                    }
+                    else if (needleValue > maximumValue) {
+                        $("#radialGauge").igRadialGauge("option", "value", 100);
+                        $("#needleValue").val(100);
+                    };
                 }
             });
                   
             var prevValue = null;
             $("#getNeedleValue").on({
                 click: function (e) {
-                    var needleValue = $("#radialgauge").igRadialGauge("option", "value");
+                    var needleValue = $("#radialGauge").igRadialGauge("option", "value");
                     if (prevValue == null || prevValue != needleValue) {
                         apiViewer.log("$$(RadialGauge_CurrentNeedleValue): " + needleValue);
                         prevValue = needleValue;
@@ -54,15 +46,18 @@ $(function () {
                       
             /*----------------- Instantiation -------------------------*/
 
-            $("#radialgauge").igRadialGauge({
+            $("#radialGauge").igRadialGauge({
                 height: "500px",
                 transitionDuration: "1500",
-                width: "500px"
+                width: "500px"                
             });
 
             function isAndroid() {
                 return navigator.userAgent.match(/Android/i) ? true : false;
             }
+
+            $("#radialGauge").igRadialGauge("option", "value", 0);
+            $("#needleValue").val(0);
 
             window.onload = function () {
                 if (!isAndroid())

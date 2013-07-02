@@ -52,7 +52,8 @@ $(function () {
                 ],
                 targetValue: 90,
                 labelInterval: 10,
-                actualValue: 80
+                actualValue: 80,
+                transitionDuration: 1000
             });
 
             // Ticks Interval

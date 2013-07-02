@@ -8,7 +8,8 @@ var energyData = [
             {"Region" : "Europe", "Country" : "France", "Coal" : 375, "Oil" : 150, "Gas" : 350, "Nuclear" : 275, "Hydro" : 325 }
         ];
 
-        $("#chart").igDataChart({
+        $(function () {
+            $("#chart").igDataChart({
                 dataSource: energyData,
                 title: "$$(Chart_Title)",
                 subTitle: "$$(Chart_Subtitle)",
@@ -54,7 +55,7 @@ var energyData = [
                     showTooltip: true,
                     tooltipTemplate: "tooltipNuclear",
                     legend: { element: "legend" }
-                },{
+                }, {
                     type: "column",
                     name: "Gas",
                     title: "$$(Chart_Composite_Gas_DS)",
@@ -76,4 +77,6 @@ var energyData = [
                     legend: { element: "legend" }
                 }],
             });
-        //});});
+        });
+        //});
+});

@@ -18,8 +18,9 @@ $(function () {
                     range
                 ],
                 targetValue: 90,
-                actualValue: 80
-            });
+                actualValue: 80,
+                transitionDuration: 1000
+        });
 
 
             // Start Value

@@ -31,21 +31,20 @@ $(function () {
             }
 
             function ViewModel(data) {
-                self = this;
+                var self = this,
+                    currSelectedChartValue = $("#slider1").data("slider")
+                        ? $("#slider1").slider("value")
+                        : 3;
                 this.data = data;
-                this.minChartValue = -50;
-                this.maxChartValue = 50;
-                this.chartWidth = 700;
-                this.chartHeight = 220;
                 this.chartThickness = 2;
-                this.chartIntervalX = 1;
-                this.chartIntervalY = 10;
                 this.transitionDuration = 1000;
+                this.chartIntervalX = 1;
                 this.revenueColor = "#a4ba29";
                 this.expensesColor = "#d3404b";
                 this.profitColor = "#216EDD";
-                this.currentIndex = ko.observable(3);
-                this.yearProfit = ko.observable(overallProfit);
+                this.outlineColor = "black";
+                this.currentIndex = ko.observable(currSelectedChartValue);
+                this.yearProfit = ko.observable(overallProfit*1000000);
                 this.formatMonth = function (value) {
                     return MTHS[value];
                 }
@@ -79,23 +78,29 @@ $(function () {
                 this.currentProfit = ko.computed({
                     read: function () {
                         var currentItem = this.data[this.currentIndex()],
-                            newProfit = currentItem.revenue() - currentItem.expenses();
-                        this.yearProfit(this.yearProfit() - currentItem.profit() + newProfit);
+                            newProfit = currentItem.revenue() - currentItem.expenses(),
+                            mil = 1000000;
+                        this.yearProfit((this.yearProfit()/mil - currentItem.profit() + newProfit)*mil);
                         this.data[this.currentIndex()].profit(newProfit);
                         return newProfit;
                     },
                     write: function (value) {
-                        var currentItem = this.data[this.currentIndex()];
-                        this.yearProfit(this.yearProfit() - currentItem.profit() + value);
+                        var currentItem = this.data[this.currentIndex()],
+                            mil = 1000000,
+                            tempRevenue = currentItem.expenses() + value;
+                        this.yearProfit((this.yearProfit()/mil - currentItem.profit() + value)*mil);
                         currentItem.profit(value);
-                        if (currentItem.revenue() + value <= 50) {
-                            currentItem.revenue(currentItem.expenses() + value);
+
+                        if (tempRevenue <= 50 && tempRevenue >= 0) {
+                            currentItem.revenue(tempRevenue);
+                            animateChartBorder("polarSplineChartRevenue");
                         } else {
-                            currentItem.revenue(50);
-                            currentItem.expenses(50 - value);
+                            tempRevenue = (tempRevenue > 50) ? 50 : 0;
+                            currentItem.revenue(tempRevenue);
+                            currentItem.expenses(tempRevenue - value);
+                            animateChartBorder("polarSplineChartExpenses");
+
                         }
-                        
-                        
                     },
                     owner: this
                 });
@@ -124,14 +129,19 @@ $(function () {
                 ko.applyBindings(dynamicModel);
             });
             $(".windows-button").click(function (e) {
-                wind1 = $(".window-container-1");
-                wind2 = $(".window-container-2");
+                var animTimeout = 1000,
+                    wind1 = $(".window-container-1"),
+                    wind2 = $(".window-container-2");
                 if (wind1.css("display") === "none") {
-                    wind2.fadeOut(1000);
-                    wind1.fadeIn(1000);
+                    wind2.fadeOut(animTimeout);
+                    wind1.fadeIn(animTimeout);
+                    $("#loadHidden").css("display", "block");
+                    $("#loadInitial").css("display", "none");
                 } else {
-                    wind1.fadeOut(1000);
-                    wind2.fadeIn(1000);
+                    wind1.fadeOut(animTimeout);
+                    wind2.fadeIn(animTimeout);
+                    $("#loadHidden").css("display", "none");
+                    $("#loadInitial").css("display", "block");
                 }
             });
             $(".main-container").on("igtexteditortextchanged", "#ed-month", animateMonth);
@@ -143,19 +153,22 @@ $(function () {
                 animateChartBorder("rangeChart"); animateChartBorder("waterfallChart");
             }
             function animateRevenue() {
-                animateChartBorder("lineChart"); animateChartBorder("barColumnChart");
-                animateChartBorder("rangeChart"); animateChartBorder("waterfallChart");
-                animateChartBorder("bubbleChart"); animateChartBorder("polarSplineChart");
+
+                animateChartBorder("polarSplineChartRevenue"); animateChartBorder("polarSplineChartProfit");
             }
             function animateExpenses() {
-                animateChartBorder("lineChart"); animateChartBorder("barColumnChart");
-                animateChartBorder("rangeChart");
-                animateChartBorder("waterfallChart"); animateChartBorder("bubbleChart");
+                animateAllThree();
+                animateChartBorder("polarSplineChartExpenses");
+                animateChartBorder("polarSplineChartProfit");
             }
             function animateProfit() {
+                animateAllThree();
+                animateChartBorder("polarSplineChartProfit");
+            }
+            function animateAllThree() {
                 animateChartBorder("lineChart"); animateChartBorder("barColumnChart");
-                animateChartBorder("rangeChart");
-                animateChartBorder("bubbleChart"); animateChartBorder("waterfallChart");
+                animateChartBorder("rangeChart"); animateChartBorder("waterfallChart");
+                animateChartBorder("bubbleChart");
             }
             function animateChartBorder(id) {
                 id = "#" + id + "_chart_container";

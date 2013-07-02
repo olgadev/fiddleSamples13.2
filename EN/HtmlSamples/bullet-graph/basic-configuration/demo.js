@@ -21,6 +21,7 @@ $(function () {
                         name: 'good',
                         startValue: 25,
                         endValue: 30
-                    }]
+                    }],
+                transitionDuration: 1000
             });
         });

@@ -46,7 +46,7 @@ $(function () {
                 $.each(cols, function () {
                     switch (this.key) {
                         case 'BirthDate':
-                            tmpl += "<td><span style='color:{{if #view.hlp('toDate')(BirthDate) > #view.hlp('toDate')('1950-01-01T00:00:00.000')}}blue{{else}}red{{/if}};'>" +
+                            tmpl += "<td><span style='color:{{if #view.hlp('toDate')(BirthDate) > #view.hlp('toDate')('1970-01-01T00:00:00.000')}}blue{{else}}red{{/if}};'>" +
                             "{{>" + this.key + "}}" + "</span></td>";
                             break;
                         case 'ImageUrl':

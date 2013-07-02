@@ -10,7 +10,7 @@ $(function () {
 
             /*----------------- Event Examples -------------------------*/
 
-            $("#grid9").on("iggridupdatingroweditdialogopened", function (evt, ui) {
+            $("#grid").on("iggridupdatingroweditdialogopened", function (evt, ui) {
                 var currDataRow = ui.dialogElement.data('tr');
                 var message = "$$(rowEditTemplate_eventFired) ";
                 for (var i = 0; i < currDataRow[0].cells.length; i++) {
@@ -20,8 +20,7 @@ $(function () {
             });
 
             /*----------------- Instantiation -------------------------*/
-
-            $("#grid9").igGrid({
+            $("#grid").igGrid({
                 virtualization: false,
                 autoGenerateColumns: false,
                 renderCheckboxes: true,
@@ -52,53 +51,53 @@ $(function () {
                 tabIndex: 1,
                 features: [
                     {
-                        name: "Selection",
-                        mode: "row"
+                    name: "Selection",
+                    mode: "row"
                     },
                     {
-                        name: "Updating",
-                        enableAddRow: false,
-                        editMode: "rowedittemplate",
-                        rowEditDialogWidth: 350,
+                    name: "Updating",
+                    enableAddRow: false,
+                    editMode: "rowedittemplate",
+                    rowEditDialogWidth: 350,
                         rowEditDialogHeight: '430',
                         rowEditDialogContentHeight: 300,
-                        rowEditDialogFieldWidth: 150,
-                        rowEditDialogOkCancelButtonWidth: 110,
+                    rowEditDialogFieldWidth: 150,
+                    rowEditDialogOkCancelButtonWidth: 110,
                         rowEditDialogContainment: "owner",
-                        rowEditDialogRowTemplateID: "rowEditDialogRowTemplate1",
-                        enableDeleteRow: false,
-                        showReadonlyEditors: false,
+                    rowEditDialogRowTemplateID: "rowEditDialogRowTemplate1",
+                    enableDeleteRow: false,
+                    showReadonlyEditors: false,
                         showDoneCancelButtons: true,
-                        enableDataDirtyException: false,
+                    enableDataDirtyException: false,
                         columnSettings: [
                             {
-                                columnKey: "EmployeeID",
-                                readOnly: true
-                            }, {
-                                columnKey: "Title",
-                                editorType: "text",
-                                editorOptions: {
-                                    button: "dropdown",
-                                    listItems: titles,
-                                    readOnly: true,
-                                    dropDownOnReadOnly: true
-                                }
-                            }, {
-                                columnKey: "Country",
-                                editorType: "text",
-                                editorOptions: {
-                                    button: "dropdown",
-                                    listItems: countries,
-                                    readOnly: true,
-                                    dropDownOnReadOnly: true
-                                }
-                            },
-                            {
-                                columnKey: "BirthDate",
-                                editorType: "datepicker",
-                                validation: true,
-                                editorOptions: { minValue: new Date(1955, 1, 19), maxValue: new Date(), required: true },
-                                validatorOptions: { bodyAsParent: false }
+                        columnKey: "EmployeeID",
+                        readOnly: true
+                    }, {
+                        columnKey: "Title",
+                        editorType: "text",
+                        editorOptions: {
+                            button: "dropdown",
+                            listItems: titles,
+                            readOnly: true,
+                            dropDownOnReadOnly: true
+                        }
+                    }, {
+                        columnKey: "Country",
+                        editorType: "text",
+                        editorOptions: {
+                            button: "dropdown",
+                            listItems: countries,
+                            readOnly: true,
+                            dropDownOnReadOnly: true
+                        }
+                    },
+                    {
+                        columnKey: "BirthDate",
+                        editorType: "datepicker",
+                        validation: true,
+                        editorOptions: { minValue: new Date(1955, 1, 19), maxValue: new Date(), required: true },
+                        validatorOptions: { bodyAsParent: false }
                             }
                         ]
                     }

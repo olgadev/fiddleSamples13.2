@@ -25,8 +25,9 @@ $(function () {
                 ],
                 actualValue: 85,
                 targetValue: 77,
-                interval: 10
-            });
+                interval: 10,
+                transitionDuration: 500
+        });
 
 
             // Orientation

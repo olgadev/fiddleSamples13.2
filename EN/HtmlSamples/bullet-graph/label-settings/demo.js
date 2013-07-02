@@ -45,7 +45,8 @@ $(function () {
                 actualValue: 38,
                 actualValueInnerExtent: 0.46,
                 actualValueOuterExtent: 0.54,
-                rangeOuterExtent: 0.8
+                rangeOuterExtent: 0.8,
+                transitionDuration: 1000
             });
 
 

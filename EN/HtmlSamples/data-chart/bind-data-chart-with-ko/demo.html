@@ -57,8 +57,13 @@
         <div class="clear"></div>
         <div class="eidtors-title">
             $$(Chart_KO_Change_Editor_Values)
-            <span class="year-profit" data-bind="text: yearProfit"></span>
-            <span class="year-profit">$</span>
+            <div class="year-profit" data-bind="igCurrencyEditor: {
+                value: yearProfit,
+                readOnly: true,
+                width: 100,
+                negativePattern: '$ -n',
+                postivePattern: '$ n'
+            }"></div>
             <span class="year-profit"> $$(Chart_KO_Overall_Profit): </span>
         </div>
         <div class="clear hr"></div>
@@ -74,8 +79,10 @@
             <div class="clear"></div>
             <div id="lineChart" class="float" data-bind='igDataChart: {
                 dataSource: data,
-                width: chartWidth,
-                height: chartHeight,
+                width: 700,
+                height: 200,
+                leftMargin: 5,
+                legend: { element: "legendLineChart" },
                 axes: [{
                     name: "xAxis",
                     type: "categoryX",
@@ -86,13 +93,15 @@
                 }, {
                     name: "yAxis",
                     type: "numericY",
-                    interval: chartIntervalY,
+                    interval: 10,
                     minimumValue: -50,
-                    maximumValue: maxChartValue
+                    maximumValue: 50,
+                    labelExtent: 30
 
                 }],
                 series: [{
                     name: "line1",
+                    title: "$$(Chart_KO_Revenue)",
                     type: "line",
                     thickness: chartThickness,
                     xAxis: "xAxis",
@@ -103,6 +112,7 @@
                 },
                 {
                     name: "line2",
+                    title: "$$(Chart_KO_Expenses)",
                     type: "line",
                     thickness: chartThickness,
                     xAxis: "xAxis",
@@ -112,9 +122,9 @@
                     brush: expensesColor
                 }, {
                     name: "line3",
+                    title: "$$(Chart_KO_Profit)",
                     type: "line",
                     thickness: chartThickness,
-                    // markerType: "automatic",
                     xAxis: "xAxis",
                     yAxis: "yAxis",
                     valueMemberPath: "profit",
@@ -123,171 +133,12 @@
                 }]
             }'>
 	        </div>
-            <div id="rangeChart" class="float" data-bind='igDataChart: {
+            <div id="legendLineChart"></div>
+            <div id="polarSplineChartRevenue" class="float" data-bind='igDataChart: {
+                width: 226,
+                height: 275,
                 dataSource: data,
-                width: chartWidth,
-                height: chartHeight,
-                axes: [{
-                    name: "xAxis",
-                    type: "categoryX",
-                    interval: chartIntervalX,
-                    label: "month",
-                    labelLocation: "outsideTop"
-                },
-                {
-                    name: "yAxis",
-                    type: "numericY",
-                }],
-                series: [{
-                    name: "rangeArea",
-                    type: "rangeArea",
-                    xAxis: "xAxis",
-                    yAxis: "yAxis",
-                    lowMemberPath: "revenue",
-                    highMemberPath: "profit",
-                    showTooltip: true,
-                    transitionDuration: transitionDuration
-                }]
-            }'></div>
-            <div id="bubbleChart" class="float" data-bind='igDataChart: {
-                dataSource: data,
-                width: chartWidth,
-                height: chartHeight,
-                axes: [{
-                    name: "xAxis",
-                    type: "numericX",
-                    interval: chartIntervalX,
-                    formatLabel: formatMonth,
-                    labelLocation: "outsideTop"
-                }, {
-                    name: "yAxis",
-                    type: "numericY",
-                    minimumValue: minChartValue,
-                    maximumValue: maxChartValue
-                }],
-                series: [{
-                    name: "bubble",
-                    type: "bubble",
-                    xAxis: "xAxis",
-                    yAxis: "yAxis",
-                    xMemberPath: "index",
-                    yMemberPath: "profit",
-                    radiusMemberPath: "revenue",
-                    fillMemberPath: "revenue",
-                    labelMemberPath: "month",
-                    markerType: "circle",
-                    transitionDuration: transitionDuration,
-                    fillScale: {
-                        type: "value",
-                        brushes: ["red", "blue"],
-                        minimumValue: 0,
-                        maximumValue: 20
-                    }
-                }]
-            }'></div>
-        </div>
-        <div class="window-container-2">
-            <div class="slider-container slider-contaier-2">
-                <div id="slider2"></div>
-            </div>
-            <div id="barColumnChart" class="float" data-bind='igDataChart: {
-                dataSource: data,
-                width: chartWidth,
-                height: chartHeight,
-                axes: [{
-                    name: "xAxis",
-                    type: "categoryX",
-                    interval: chartIntervalX,
-                    label: "month",
-                    labelLocation: "outsideTop"
-                }, {
-                    name: "yAxis",
-                    type: "numericY",
-                    minimumValue: minChartValue,
-                    maximumValue: maxChartValue
-
-                }],
-                series: [{
-                    name: "column1",
-                    type: "column",
-                    thickness: chartThickness,
-                    xAxis: "xAxis",
-                    yAxis: "yAxis",
-                    valueMemberPath: "revenue",
-                    transitionDuration: transitionDuration,
-                    brush: revenueColor
-                },
-                {
-                    name: "column2",
-                    type: "column",
-                    thickness: chartThickness,
-                    xAxis: "xAxis",
-                    yAxis: "yAxis",
-                    valueMemberPath: "expenses",
-                    transitionDuration: transitionDuration,
-                    brush: expensesColor
-                }, {
-                    name: "column3",
-                    type: "column",
-                    thickness: chartThickness,
-                    xAxis: "xAxis",
-                    yAxis: "yAxis",
-                    valueMemberPath: "profit",
-                    transitionDuration: transitionDuration,
-                    brush: profitColor
-                }]
-            }'></div>
-           <div id="waterfallChart" class="float" data-bind='igDataChart: {
-                dataSource: data,
-                width: chartWidth,
-                height: chartHeight,
-                axes: [{
-                    name: "xAxis",
-                    type: "categoryX",
-                    interval: chartIntervalX,
-                    label: "month",
-                    labelLocation: "outsideTop"
-                }, {
-                    name: "yAxis",
-                    type: "numericY",
-                    minimumValue: minChartValue,
-                    maximumValue: maxChartValue
-
-                }],
-                series: [{
-                    name: "waterfall1",
-                    type: "waterfall",
-                    thickness: chartThickness,
-                    xAxis: "xAxis",
-                    yAxis: "yAxis",
-                    valueMemberPath: "revenue",
-                    transitionDuration: transitionDuration
-
-                },
-                {
-                    name: "waterfall2",
-                    type: "waterfall",
-                    thickness: chartThickness,
-                    xAxis: "xAxis",
-                    yAxis: "yAxis",
-                    valueMemberPath: "expenses",
-                    transitionDuration: transitionDuration
-                }, {
-                    name: "waterfall3",
-                    type: "waterfall",
-                    thickness: chartThickness,
-                    xAxis: "xAxis",
-                    yAxis: "yAxis",
-                    valueMemberPath: "profit",
-                    transitionDuration: transitionDuration
-                }]
-            }'>
-	        </div>
-
-            <div id="polarSplineChart" class="float" data-bind='igDataChart: {
-                width: chartWidth,
-                height: chartHeight,
-                dataSource: data,
+                legend: { element: "legendPolarChartRevenue" },
                 axes: [{
                     name: "angleAxis",
                     type: "numericAngle",
@@ -301,18 +152,267 @@
                 series: [{
                     name: "polarSpline",
                     type: "polarSpline",
+                    title: "$$(Chart_KO_Revenue)",
                     angleAxis: "angleAxis",
                     radiusAxis: "radiusAxis",
                     angleMemberPath: "index",
                     radiusMemberPath: "revenue",
                     transitionDuration: transitionDuration,
-                    markerBrush: ""
+                    brush: revenueColor
                 }]
             }'>
 	        </div>
+            <div id="legendPolarChartRevenue"></div>
+            <div id="polarSplineChartExpenses" class="float" data-bind='igDataChart: {
+                width: 228,
+                height: 275,
+                dataSource: data,
+                legend: { element: "legendPolarChartExpenses" },
+                axes: [{
+                    name: "angleAxis",
+                    type: "numericAngle",
+                    interval: chartIntervalX,
+                    formatLabel: formatMonth,
+                },
+                {
+                    name: "radiusAxis",
+                    type: "numericRadius"
+                }],
+                series: [{
+                    name: "polarSpline",
+                    type: "polarSpline",
+                    title: "$$(Chart_KO_Expenses)",
+                    angleAxis: "angleAxis",
+                    radiusAxis: "radiusAxis",
+                    angleMemberPath: "index",
+                    radiusMemberPath: "expenses",
+                    transitionDuration: transitionDuration,
+                    brush: expensesColor
+                }]
+            }'>
+	        </div>
+            <div id="legendPolarChartExpenses"></div>
+            <div id="polarSplineChartProfit" class="float" data-bind='igDataChart: {
+                width: 226,
+                height: 275,
+                dataSource: data,
+                legend: { element: "legendPolarChartProfit" },
+                axes: [{
+                    name: "angleAxis",
+                    type: "numericAngle",
+                    interval: chartIntervalX,
+                    formatLabel: formatMonth,
+                },
+                {
+                    name: "radiusAxis",
+                    type: "numericRadius"
+                }],
+                series: [{
+                    name: "polarSpline",
+                    type: "polarSpline",
+                    title: "$$(Chart_KO_Profit)",
+                    angleAxis: "angleAxis",
+                    radiusAxis: "radiusAxis",
+                    angleMemberPath: "index",
+                    radiusMemberPath: "profit",
+                    transitionDuration: transitionDuration,
+                    brush: profitColor
+                }]
+            }'>
+	        </div>
+            <div id="legendPolarChartProfit"></div>
+
+            <div id="rangeChart" class="float" data-bind='igDataChart: {
+                dataSource: data,
+                width: 700,
+                height: 185,
+                leftMargin: 5,
+                legend: { element: "legendRangeChart" },
+                axes: [{
+                    name: "xAxis",
+                    type: "categoryX",
+                    interval: chartIntervalX,
+                    label: "month",
+                    labelLocation: "outsideTop"
+                },
+                {
+                    name: "yAxis",
+                    type: "numericY",
+                    labelExtent: 30
+                }],
+                series: [{
+                    name: "rangeArea",
+                    type: "rangeArea",
+                    title: "$$(Chart_KO_Revenue_Profit)",
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    lowMemberPath: "revenue",
+                    highMemberPath: "profit",
+                    showTooltip: true,
+                    tooltipTemplate: "$$(Chart_KO_Revenue_Profit)",
+                    transitionDuration: transitionDuration
+                }]
+            }'></div>
+            <div id="legendRangeChart"></div>
+        </div>
+        <div class="window-container-2">
+            <div class="slider-container slider-contaier-2">
+                <div id="slider2"></div>
+            </div>
+            <div id="barColumnChart" class="float" data-bind='igDataChart: {
+                dataSource: data,
+                width: 700,
+                height: 220,
+                leftMargin: 5,
+                legend: { element: "legendBarColumnChart" },
+                axes: [{
+                    name: "xAxis",
+                    type: "categoryX",
+                    interval: chartIntervalX,
+                    label: "month",
+                    labelLocation: "outsideTop"
+                }, {
+                    name: "yAxis",
+                    type: "numericY",
+                    minimumValue: -50,
+                    maximumValue: 50
+                }],
+                series: [{
+                    name: "column1",
+                    type: "column",
+                    title: "$$(Chart_KO_Revenue)",
+                    thickness: chartThickness,
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    valueMemberPath: "revenue",
+                    transitionDuration: transitionDuration,
+                    brush: revenueColor,
+                    outline: outlineColor
+                },
+                {
+                    name: "column2",
+                    type: "column",
+                    title: "$$(Chart_KO_Expenses)",
+                    thickness: chartThickness,
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    valueMemberPath: "expenses",
+                    transitionDuration: transitionDuration,
+                    brush: expensesColor,
+                    outline: outlineColor
+                }, {
+                    name: "column3",
+                    type: "column",
+                    title: "$$(Chart_KO_Profit)",
+                    thickness: chartThickness,
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    valueMemberPath: "profit",
+                    transitionDuration: transitionDuration,
+                    brush: profitColor,
+                    outline: outlineColor
+                }]
+            }'></div>
+           <div id="legendBarColumnChart"></div>
+           <div id="waterfallChart" class="float" data-bind='igDataChart: {
+                dataSource: data,
+                width: 700,
+                height: 220,
+                leftMargin: 5,
+                legend: { element: "legendWaterfallChart" },
+                axes: [{
+                    name: "xAxis",
+                    type: "categoryX",
+                    interval: chartIntervalX,
+                    label: "month",
+                    labelLocation: "outsideTop"
+                }, {
+                    name: "yAxis",
+                    type: "numericY",
+                    minimumValue: -50,
+                    maximumValue: 50
+                }],
+                series: [{
+                    name: "waterfall1",
+                    type: "waterfall",
+                    title: "$$(Chart_KO_Revenue)",
+                    thickness: chartThickness,
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    valueMemberPath: "revenue",
+                    transitionDuration: transitionDuration,
+                    brush: revenueColor,
+                    outline: outlineColor
+
+                }, {
+                    name: "waterfall2",
+                    type: "waterfall",
+                    title: "$$(Chart_KO_Expenses)",
+                    thickness: chartThickness,
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    valueMemberPath: "expenses",
+                    transitionDuration: transitionDuration,
+                    brush: expensesColor,
+                    outline: outlineColor
+                }, {
+                    name: "waterfall3",
+                    type: "waterfall",
+                    title: "$$(Chart_KO_Profit)",
+                    thickness: chartThickness,
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    valueMemberPath: "profit",
+                    transitionDuration: transitionDuration,
+                    brush: profitColor,
+                    outline: outlineColor
+                }]
+            }'>
+	        </div>
+            <div id="legendWaterfallChart"></div>
+            <div id="bubbleChart" class="float" data-bind='igDataChart: {
+                dataSource: data,
+                width: 700,
+                height: 220,
+                leftMargin: 5,
+                legend: { element: "legendBubbleChart" },
+                axes: [{
+                    name: "xAxis",
+                    type: "numericX",
+                    interval: chartIntervalX,
+                    formatLabel: formatMonth,
+                    labelLocation: "outsideTop"
+                }, {
+                    name: "yAxis",
+                    type: "numericY",
+                    labelExtent: 30
+                }],
+                series: [{
+                    name: "bubble",
+                    type: "bubble",
+                    title: "$$(Chart_KO_Profit)",
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    xMemberPath: "index",
+                    yMemberPath: "profit",
+                    radiusMemberPath: "revenue",
+                    fillMemberPath: "revenue",
+                    labelMemberPath: "month",
+                    markerType: "circle",
+                    transitionDuration: transitionDuration,
+                    fillScale: {
+                        type: "value",
+                        brushes: [expensesColor, profitColor]
+                    }
+                }]
+            }'></div>
+            <div id="legendBubbleChart"></div>
+            <div id="legendBubbleChartY"><span class="arrow">&uarr;</span>$$(Chart_KO_Revenue)</div>
+            <div id="legendBubbleChartX">$$(Chart_KO_Month)<span class="arrow">&rarr;</span></div>
             <div class="clear"></div>
         </div>
         <div class="clear"></div>
-        <button class="windows-button"></button>
+        <button id="loadHidden" class="windows-button" title="$$(Chart_KO_Load_More_Charts)"></button>
+        <button id="loadInitial" class="windows-button" title="$$(Chart_KO_Load_Initial_Charts)"></button>
     </div>
     <div class="clear"></div>

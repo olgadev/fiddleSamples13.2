@@ -5,6 +5,7 @@ $(function () {
             $bulletGraph.igBulletGraph({
                 width: "600px",
                 height: "120px",
+                transitionDuration: 1000,
                 ranges: [
                     {
                         name: 'bad',

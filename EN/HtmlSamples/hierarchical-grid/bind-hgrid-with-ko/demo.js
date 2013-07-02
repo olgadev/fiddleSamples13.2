@@ -34,4 +34,5 @@ var customerOrdersModel, modifiedDataSource = {}, Records = [], db = northwind.r
             if (date.indexOf("(") > 0)
                 return new Date(parseInt(date.substring(date.indexOf("(") + 1, date.lastIndexOf(")"))));
             return Date.parse(date);
-        }});
+        }
+});

@@ -41,4 +41,5 @@ var itemsModel, db = nwCustomersWithOrders;
 
             itemsModel = new ItemsViewModel();
             ko.applyBindings(itemsModel);
-        });});
+        });
+});

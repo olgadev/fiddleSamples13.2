@@ -6,23 +6,33 @@
 <link href="http://cdn-na.infragistics.com/jquery/20132/beta/css/themes/infragistics/infragistics.theme.css" rel="stylesheet"></link>
 <link href="http://cdn-na.infragistics.com/jquery/20132/beta/css/structure/infragistics.css" rel="stylesheet"></link>
 
-<fieldset id="gaugeOptions" style="margin-bottom: 50px">
+<div id="bulletgraph">
+    </div>
+
+    
+
+    <fieldset id="graphOptions" style="margin-top: 30px">
         <legend>$$(Options)</legend>
         <table>
             <tr>
-                <td>$$(Orientation)</td>
+                <td>$$(ChooseSetting)</td>
                 <td>
-                    <button id="orientationButton" style="width: 100px; margin: 12px 40px 12px 12px">$$(Horizontal)</button>
+                    <select id="graphSettings">
+                        <option value="setting1();" selected="selected">$$(Setting1)</option>
+                        <option value="setting2();">$$(Setting2)</option>
+                        <option value="setting3();">$$(Setting3)</option>
+                    </select>
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>$$(TransitionDuration)</td>
+                <td>
+                    <div id="transitionDurationSlider" style="width: 100px; margin: 12px 40px 12px 12px"></div>
                 </td>
                 <td>
-                    <label for="isScaleInvertedCheckBox">$$(IsScaleInverted)</label></td>
-                <td>
-                    <input type="checkbox" id="isScaleInvertedCheckBox" style="width: 100px; margin: 12px"></input>
+                    <label id="transitionDurationLabel">1000</label>
                 </td>
             </tr>
         </table>
     </fieldset>
-
-    
-    <div id="bulletgraph">
-    </div>

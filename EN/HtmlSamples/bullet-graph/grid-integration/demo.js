@@ -36,7 +36,8 @@ var data = [
                                     startValue: el.start,
                                     endValue: el.end
                                 };
-                            })
+                            }),
+                            transitionDuration: 1200
                         });
                     });
                 },
@@ -70,4 +71,5 @@ var data = [
                     }],
                 caption: "$$(EnergySource)"
             });
-        });});
+        });
+});
